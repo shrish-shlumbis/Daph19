@@ -154,6 +154,7 @@ button{
 <!-- Yes Screen -->
 <div id="yes-container">
   <h1>Yay! I knew you would say yes ahehe, SEE YOU LATER DANISAWWRRR!! </h1>
+  <div id="yesDays" style="color:#ff4d88;font-size:22px;margin-top:10px;"></div>
   <img src="https://media.tenor.com/A5VhCveZ_ygAAAAi/peach-and-goma-peach-goma.gif" alt="Penguin cuddling sticker" />
 </div>
 
@@ -270,39 +271,37 @@ noBtn.addEventListener('mouseenter',()=>{
   animateNoButton();
 });
 
-// YES button click
-
 yesBtn.addEventListener("click", () => {
 
-  // Show the YES scene first
+  // switch screen
   document.getElementById('main-container').style.display = 'none';
   document.getElementById('yes-container').style.display = 'flex';
 
-  // Calculate days
+  // calculate days
   const startDate = new Date('2024-05-31T00:00:00');
   const today = new Date();
   const days = Math.floor((today - startDate) / (1000*60*60*24));
 
-  const daysDiv = document.getElementById('daysTogether');
-  daysDiv.innerText = `We've been together for ${days} days 💞`;
-  daysDiv.style.display = 'block';
+  document.getElementById("yesDays").innerText =
+    `We've been together for ${days} days 💞`;
 
-  // optional music
+  // try play music
   const audio = document.getElementById("loveAudio");
-  if(audio) audio.play().catch(()=>{});
+  if(audio){
+    audio.currentTime = 0;
+    audio.play().catch(()=>{});
+  }
 
-  // stay on this screen for 4 seconds
+  // wait 4 seconds then fade
   setTimeout(() => {
-
-    document.body.style.transition = "opacity 1.5s";
+    document.body.style.transition = "opacity 1.5s ease";
     document.body.style.opacity = "0";
-
-    // then go to flowers
-    setTimeout(() => {
-      window.location.href = "./flower.html";
-    }, 1500);
-
   }, 4000);
+
+  // AFTER fade completes → redirect
+  document.body.addEventListener("transitionend", () => {
+    window.location.href = "flower.html";
+  }, { once:true });
 
 });
 
@@ -324,6 +323,7 @@ function createHearts(){
 </script>
 </body>
 </html>
+
 
 
 
