@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Be My Valentine? 🧸💖</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+body{
+  margin:0;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:linear-gradient(135deg,#ff9a9e,#fad0c4);
+  font-family:'Poppins',sans-serif;
+  overflow:hidden;
+}
+#slideshow-screen{
+  position:absolute;
+  width:100%;
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  background:linear-gradient(135deg,#ffccd5,#ff99cc);
+  z-index:10;
+  text-align:center;
+}
+#slideshow-screen img{
+  width:300px;
+  height:auto;
+  border-radius:20px;
+  box-shadow:0 10px 20px rgba(0,0,0,0.3);
+  transition: opacity 1s;
+}
+#slideshow-screen p{
+  margin-top:20px;
+  font-size:24px;
+  color:#ff4d88;
+  text-align:center;
+  max-width: 80%;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+/* Main Valentine Page */
+.container{
+  position:relative; /* keeps NO button inside */
+  background:rgba(255,255,255,0.2);
+  padding:40px;
+  border-radius:25px;
+  text-align:center;
+  backdrop-filter:blur(10px);
+  box-shadow:0 20px 40px rgba(0,0,0,0.25);
+  max-width:520px;
+  width:90%;
+  display:none;
+  flex-direction:column;
+  align-items:center;
+  overflow:hidden;
+}
+h1{color:#fff;font-size:2.3rem}
+.days{
+  color:#fff;
+  margin-top:10px;
+  font-size:1.2rem;
+  display:none; /* hide initially */
+}
+.buttons{margin-top:25px;position:relative;height:60px;}
+button{
+  font-size:1.2rem;
+  padding:12px 26px;
+  border:none;
+  border-radius:999px;
+  cursor:pointer;
+  margin:10px;
+  transition:.25s;
+}
+.yes-button{
+  background:#ff4d6d;
+  color:#fff;
+  z-index:10;
+  position:relative;
+}
+.no-button{
+  background:#fff;
+  color:#ff4d6d;
+  position:absolute;
+  z-index:5;
+  transition: left 0.5s ease, top 0.5s ease; /* smooth movement */
+}
+.final-yes{
+  font-size:2rem!important;
+  animation:glow 1s infinite alternate;
+}
+@keyframes glow{
+  from{box-shadow:0 0 10px #fff,0 0 20px #ff4d6d}
+  to{box-shadow:0 0 25px #fff,0 0 60px #ff4d6d}
+}
+.gif_container img{
+  width:220px;
+  margin-top:25px;
+  border-radius:15px;
+}
+.message{
+  display:none;
+  margin-top:20px;
+  font-size:1.4rem;
+  color:#fff;
+}
+#yes-container{
+  width:100%;
+  height:100vh;
+  display:none;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  background:linear-gradient(135deg,#ffccd5,#ff99cc);
+}
+#yes-container h1{
+  font-size:36px;
+  color:#ff4d88;
+  margin-bottom:20px;
+}
+#yes-container img{
+  width:300px;
+  height:auto;
+}
+</style>
+</head>
+<body>
+
+<!-- Slideshow / Story Screen -->
+<div id="slideshow-screen">
+  <img id="slideImg" src="https://media.giphy.com/media/l0HlBO7eyXzSZkJri/giphy.gif" alt="Slide 1" />
+  <p id="slideText"></p>
+</div>
+
+<!-- Main Valentine Page -->
+<div class="container" id="main-container">
+  <h1>Will you be my Valentine? 💖</h1>
+  <div class="days" id="daysTogether"></div>
+  <div class="buttons">
+    <button class="yes-button" id="yesBtn">Yes 🥰</button>
+    <button class="no-button" id="noBtn">No 😢</button>
+  </div>
+  <div class="message" id="loveMsg">Knew you would say yes ❤️</div>
+  <div class="gif_container">
+    <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExbW5lenZyZHI5OXM2eW95b3pmMG40cWVrMDhtNjVuM3A4dGNxa2g2dSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/VM1fcpu2bKs1e2Kdbj/giphy.gif">
+  </div>
+</div>
+
+<!-- Yes Screen -->
+<div id="yes-container">
+  <h1>Yay! I knew you would say yes ahehe, SEE YOU LATER DANISAWWRRR!! </h1>
+  <img src="https://media.tenor.com/A5VhCveZ_ygAAAAi/peach-and-goma-peach-goma.gif" alt="Penguin cuddling sticker" />
+</div>
+
+<!-- Audio -->
+<audio id="loveAudio" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_3f5472f0d8.mp3?filename=romantic-love-11245.mp3"></audio>
+
+<script>
+// Story lines
+const storyLines=[
+  "It's about damn time!!!",
+  "Everyday I cannot believe how lucky I am",
+  "Amongst trillions and trillions of stars, over billions of years",
+  "To be alive, and to get to spend this life with you",
+  "Is so incredibly, unfathomably unlikely",
+  "And yet here I am to get the impossible chance to get to know you",
+  "I love you so much Dan, more than all the time and space in the universe can contain",
+  "And ofc much more than the size of your petite body ><",
+  "And I can't wait to spend all the time in the world to share that love with you!"
+];
+
+const slideText = document.getElementById("slideText");
+const slideImg = document.getElementById("slideImg");
+let storyIndex=0;
+
+function showStory(){
+  if(storyIndex<storyLines.length){
+    slideText.style.opacity=0;
+    setTimeout(()=>{
+      slideText.innerText = storyLines[storyIndex];
+      slideText.style.opacity=1;
+
+      if(storyIndex===0){
+        slideImg.style.opacity=0;
+      }
+      storyIndex++;
+    },500);
+
+    setTimeout(showStory,4000);
+  }else{
+    document.getElementById("slideshow-screen").style.display="none";
+    document.getElementById("main-container").style.display="flex";
+  }
+}
+
+// Start first line immediately
+showStory();
+
+// NO button messages
+const messages=[
+  'Are you sure?',
+  'Really really sure??',
+  'Think carefully 🧐',
+  'Pookie please 🥺',
+  'My heart will break...',
+  'Okay last chance!',
+  "You can't escape destiny ❤️"
+];
+
+let index=0;
+const noBtn=document.getElementById('noBtn');
+const yesBtn=document.getElementById('yesBtn');
+const container=document.querySelector('.container');
+
+let targetX=0, targetY=0;
+let currentX=0, currentY=0;
+let moving=false;
+
+// Generate a new random target position inside container
+function setNewTarget(){
+  const containerRect = container.getBoundingClientRect();
+  const btnRect = noBtn.getBoundingClientRect();
+  const padding = 8;
+
+  const maxX = containerRect.width - btnRect.width - padding*2;
+  const maxY = containerRect.height - btnRect.height - padding*2;
+
+  targetX = Math.random() * maxX + padding;
+  targetY = Math.random() * maxY + padding;
+  moving = true;
+}
+
+// Animate the NO button smoothly
+function animateNoButton(){
+  if(!moving) return;
+  const dx = (targetX - currentX) * 0.05; // slower movement
+  const dy = (targetY - currentY) * 0.05;
+
+  currentX += dx;
+  currentY += dy;
+
+  noBtn.style.left = currentX + "px";
+  noBtn.style.top = currentY + "px";
+
+  if(Math.abs(targetX - currentX) < 1 && Math.abs(targetY - currentY) < 1){
+    moving = false;
+  }
+
+  requestAnimationFrame(animateNoButton);
+}
+
+noBtn.addEventListener('mouseenter',()=>{
+  if(index < messages.length){
+    noBtn.textContent = messages[index];
+    index++;
+  } else {
+    noBtn.remove();
+    yesBtn.classList.add('final-yes');
+    yesBtn.textContent='YES ❤️';
+    return;
+  }
+  setNewTarget();
+  animateNoButton();
+});
+
+// YES button click
+
+yesBtn.addEventListener("click", () => {
+
+  // Show the YES scene first
+  document.getElementById('main-container').style.display = 'none';
+  document.getElementById('yes-container').style.display = 'flex';
+
+  // Calculate days
+  const startDate = new Date('2024-05-31T00:00:00');
+  const today = new Date();
+  const days = Math.floor((today - startDate) / (1000*60*60*24));
+
+  const daysDiv = document.getElementById('daysTogether');
+  daysDiv.innerText = `We've been together for ${days} days 💞`;
+  daysDiv.style.display = 'block';
+
+  // optional music
+  const audio = document.getElementById("loveAudio");
+  if(audio) audio.play().catch(()=>{});
+
+  // stay on this screen for 4 seconds
+  setTimeout(() => {
+
+    document.body.style.transition = "opacity 1.5s";
+    document.body.style.opacity = "0";
+
+    // then go to flowers
+    setTimeout(() => {
+      window.location.href = "flowers.html";
+    }, 1500);
+
+  }, 4000);
+
+});
+
+
+// Falling hearts
+function createHearts(){
+  for(let i=0;i<35;i++){
+    const heart=document.createElement('div');
+    heart.innerHTML='❤️';
+    heart.style.position='fixed';
+    heart.style.left=Math.random()*100+'vw';
+    heart.style.top='-20px';
+    heart.style.fontSize=(Math.random()*20+20)+'px';
+    heart.style.animation='fall '+(Math.random()*2+3)+'s linear forwards';
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),5000);
+  }
+}
+</script>
+</body>
+</html>
